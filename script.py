@@ -19,19 +19,24 @@ def delete_matching_txt(image_folder, txt_folder,original_folder):
             else:
                 print(f"No matching .txt file found for: {image_name}")
 
-        # iterate over the original folder if there is there is any images not in image_name move it to "detected folder"
-        
+        # iterate over the original folder if there is any images not in image_name
+        # move it to "detected folder"
+
         for original_file in os.listdir(original_folder):
             original_name, ext = os.path.splitext(original_file)
             if ext.lower() in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']:
                 if original_name not in image_name:
                     os.rename(original_file, f"detected/{original_file}")
                     print(f"Moved: {original_file} to detected folder")
+                else:
+                    os.rename(original_file, f"not_detected/{original_file}")
+                    print(f"Moved: {original_file} to not_detected folder")
 
 
-# Example usage
-image_folder = 'path/to/your/image/folder'
+
+# Define the paths to the image and txt folders
+image_folder = 'path/to/your/image/folder'   # deleted images (not detected)
 txt_folder = 'path/to/your/txt/folder'
-original_folder = 'path/to/your/original/folder'
+original_folder = 'path/to/your/original/folder' #original images
 
-delete_matching_txt(image_folder, txt_folder,original_folder)
+delete_matching_txt(image_folder, txt_folder, original_folder)
