@@ -1,7 +1,7 @@
 import os
 
 
-def delete_matching_txt(image_folder, txt_folder):
+def delete_matching_txt(image_folder, txt_folder,original_folder):
     # Get list of image files in the image folder
     for image_file in os.listdir(image_folder):
         # Extract the name without the extension
@@ -19,9 +19,19 @@ def delete_matching_txt(image_folder, txt_folder):
             else:
                 print(f"No matching .txt file found for: {image_name}")
 
+        # iterate over the original folder if there is there is any images not in image_name move it to "detected folder"
+        
+        for original_file in os.listdir(original_folder):
+            original_name, ext = os.path.splitext(original_file)
+            if ext.lower() in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']:
+                if original_name not in image_name:
+                    os.rename(original_file, f"detected/{original_file}")
+                    print(f"Moved: {original_file} to detected folder")
+
 
 # Example usage
 image_folder = 'path/to/your/image/folder'
 txt_folder = 'path/to/your/txt/folder'
+original_folder = 'path/to/your/original/folder'
 
-delete_matching_txt(image_folder, txt_folder)
+delete_matching_txt(image_folder, txt_folder,original_folder)
